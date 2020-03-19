@@ -69,3 +69,69 @@ INSERT INTO Products (ProductID, ProductName, Description, BuyPrice) VALUES
 (2, 'Classic Car', 'Turnable front wheels, steering function', 'R550.75'),
 (3, 'Sports Car', 'Turnable front wheels, steereing function', R700.60);
 
+-- PART2: QUERYING DATABASE
+SELECT * FROM Customers;
+
+-- Select only column with FirstName and LastName as name on Customers table
+SELECT FirstName || ' ' || LastName AS name FROM Customers;
+
+-- Show the name of the customer whose CustomerID is 1
+SELECT FirstName || ' ' || LastName AS name FROM Customers WHERE CustomerID=2;
+
+-- DELETE the record from Customers table for customer 2 (CustomerID=2) my list starts from the number two so i deleted my third CustomerID as i am taking it as my second CustomerID.
+DELETE FROM Customers WHERE CustomerID=2;
+
+-- UPDATE the record for CustomerID = 1 on the customer table so that the name is "Lerato Mabitso"
+UPDATE Customers set FirstName = 'Lerato', LastName = 'Mabitso' WHERE CustomerID=1;
+
+-- Select all unique statuses from the orders table and get a count of the number of orders for each unique status
+SELECT DISTINCT status, COUNT(DISTINCT status) FROM orders GROUP BY status;
+
+-- Return the MAXIMUM payment made on the payments table.
+SELECT MAX(Amount) FROM Payments;
+
+-- Select all Customers from the Customers table, sorted by country column in ascending order
+SELECT * FROM Customers ORDER BY Country ASC;
+-- Select all Customers from the Customers table, sorted by country column in descending order
+SELECT * FROM Customers ORDER BY Country DESC;
+
+ --Select all products with a price BETWEEN R100 and R600.
+SELECT * FROM Products WHERE BuyPrice BETWEEN 100 AND 600;
+
+--Select all fields from “Customers” where country is “Germany” AND city is “Berlin”.
+SELECT * FROM Customers WHERE country = 'Germany' AND city = 'Berlin';
+
+--Select all fields from “Customers” where city is “Cape Town” OR “Durban”.
+SELECT * FROM Customers  WHERE city = 'Cape Town' OR city = 'Durban';
+
+--Select all records from Products where the Price is GREATER than R500.
+SELECT * FROM Products WHERE BuyPrice >500;
+
+--Return the sum of the Amounts on the Payments table.
+SELECT SUM(Amount) FROM Payments;
+
+--Count the number of shipped orders in the Orders table.
+SELECT COUNT(status) FROM Orders WHERE status='Shipped';
+
+--Return the average price of all Products, in Rands and in Dollars (assume the exchange rate is R12 to the Dollar).
+SELECT AVG(BuyPrice) AS Rand, AVG(BuyPrice/12) AS DOLLARS FROM products;
+
+--Using INNER JOIN create a query that selects all Payments with Customer information.
+SELECT
+    Customers.CustomerID,
+    Customers.FirstName,
+    Customers.LastName,
+    Customers.Gender,
+    Customers.Address,
+    Customers.Phone,
+    Customers.Email,
+    Customers.City,
+    Customers.Country,
+    payments.PaymentDate,
+    payments.Amount
+FROM
+    Customers
+INNER JOIN Payments ON Customers.CustomerID = Payments.CustomerID;
+
+-- Select all products that have turnable front wheels.
+SELECT * FROM Products WHERE description LIKE 'Turnable front wheels%';
